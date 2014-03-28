@@ -19,7 +19,6 @@ development:
   encoding: unicode
   database: EngPort_development
   pool: 5
-  username: EngPort
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
