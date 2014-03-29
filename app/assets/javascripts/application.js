@@ -17,3 +17,4 @@
 //= require jquery.wookmark
 //= require_self
 //= require bootstrap-typeahead2
+//= require moment.min
