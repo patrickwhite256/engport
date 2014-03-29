@@ -61,3 +61,13 @@ production:
   password: tRrLsQg_Q7cDZxTMYYU8_kJ-r2
   host: ec2-54-204-45-126.compute-1.amazonaws.com
   port: 5432
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: d67flo5ufsaidf
+  pool: 5
+  username: fgubeeqqqchtra
+  password: tRrLsQg_Q7cDZxTMYYU8_kJ-r2
+  host: ec2-54-204-45-126.compute-1.amazonaws.com
+  port: 5432

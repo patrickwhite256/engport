@@ -1,2 +1,2 @@
-class PropertiesController < ApplicationController
+class AnnouncementController < ApplicationController
 end
