@@ -15,3 +15,5 @@
 //= require turbolinks
 //= require_tree .
 //= require jquery.wookmark
+//= require_self
+//= require bootstrap-typeahead2

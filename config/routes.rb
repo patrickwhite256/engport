@@ -4,4 +4,6 @@ EngPort::Application.routes.draw do
       get :export
     end
   end
+
+  root controller: 'announcements', action: 'index'
 end
