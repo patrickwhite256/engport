@@ -1,6 +1,8 @@
 require "prawn"
 
 class AnnouncementsController < ApplicationController
+  http_basic_authenticate_with name: "Clarisse", password: "trees", only: :new
+
   def new
     @announcement = Announcement.new
   end
