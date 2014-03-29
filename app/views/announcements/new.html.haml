@@ -8,9 +8,13 @@
           .col-sm-9
             = f.text_field :title, class: 'form-control'
         .form-group
-          = f.label 'Date (optional)', class: 'col-sm-3 control-label'
+          = label_tag :date_label, 'Date (optional)', class: 'col-sm-3 control-label'
           .col-sm-9
-            = f.text_field :date, type: :date, class: 'form-control'
+            = text_field_tag :date_entry, '', type: :date, class: 'form-control'
+        .form-group
+          = label_tag :time_label, 'Time (optional)', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = text_field_tag :time_entry, '', type: :time, class: 'form-control'
         .form-group
           = f.label 'Description', class: 'col-sm-3 control-label'
           .col-sm-9
