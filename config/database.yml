@@ -45,15 +45,19 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: EngPort_test
+  database: d67flo5ufsaidf
   pool: 5
-  username: EngPort
-  password:
+  username: fgubeeqqqchtra
+  password: tRrLsQg_Q7cDZxTMYYU8_kJ-r2
+  host: ec2-54-204-45-126.compute-1.amazonaws.com
+  port: 5432
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: EngPort_production
+  database: d67flo5ufsaidf
   pool: 5
-  username: EngPort
-  password:
+  username: fgubeeqqqchtra
+  password: tRrLsQg_Q7cDZxTMYYU8_kJ-r2
+  host: ec2-54-204-45-126.compute-1.amazonaws.com
+  port: 5432
