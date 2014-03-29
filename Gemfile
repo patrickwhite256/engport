@@ -20,7 +20,8 @@ gem 'jquery-rails', "~> 2.1.4"
 gem 'sunspot_rails'
 gem 'rack'
 gem 'sunspot_solr'
-gem 'rtex'
+gem 'prawn'
+gem 'prawn_rails'
 gem 'jbuilder', '~> 1.2'
 gem 'rails_12factor', group: :production
 gem 'turbolinks'
