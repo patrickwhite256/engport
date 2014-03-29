@@ -2,7 +2,7 @@ var highlighted = new Array();
 
 function clickListener(e) {
   var clickedElement = (window.event) ? window.event.srcElement : e.target
-  if (clickedElement.tagName == 'A') {
+  if (clickedElement.id == 'export') {
     pdfExport()
     return;
   } else if (clickedElement.tagName != 'DIV') {
