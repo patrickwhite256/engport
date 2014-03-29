@@ -1,8 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Bitter:700);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
 html {
     height: 100%;
+    font-family: 'Source Sans Pro' !important;
     
     body {
 	min-height: 100%;
+	
+	h1 {
+	    font-family: 'Bitter';
+	}
     }
 }
 

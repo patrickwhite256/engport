@@ -11,6 +11,10 @@
           %a.meeting_link= "Meeting #{i}"
     %form#announcement-search{ method: "GET", action: "/announcements" }
       %input.form-control#announcement-search-query{ type: "text", placeholder: "#search", name: "q", autocomplete: "off" }
+    #export_bar
+      =link_to "Export", '#', id: 'dl', class: 'btn btn-default'
+      =link_to "Share on Facebook", '#', id: 'fb', class: 'btn btn-default'
+      =link_to "Share on Twitter", '#', id: 'tw', class: 'btn btn-default'
     #wookmark_container
       - @announcements.each do |announcement|
         .event{id: announcement.id}
@@ -22,6 +26,3 @@
           - announcement.tag_list.each do |tag|
             %span.caption= '#' + tag
           %br
-=link_to "Export", '#', id: 'dl'
-=link_to "Share on Facebook", '#', id: 'fb'
-=link_to "Share on Twitter", '#', id: 'tw'
