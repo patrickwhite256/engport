@@ -40,7 +40,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def export
-    @announcements = Announcement.all
+    @announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
 
     pdf = Prawn::Document.new
     @announcements.each do |announce|
@@ -51,8 +51,8 @@ class AnnouncementsController < ApplicationController
         pdf.text announce.notes
       }
     end
-    pdf.render_file "app/views/announcements/export.pdf"
+    pdf.render_file "public/export.pdf"
 
-    send_file("app/views/announcements/export.pdf", disposition: 'inline')
+    send_file "public/export.pdf"
   end
 end

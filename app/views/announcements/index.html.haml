@@ -1,4 +1,8 @@
+= javascript_include_tag 'index'
+
 - @announcements.each do |announcement|
-  %h1= announcement.title
-  %h2= announcement.description
-  %br
+  %div{id: announcement.id}
+    %h1= announcement.title
+    %h2= announcement.description
+
+=link_to "Export", '#'
