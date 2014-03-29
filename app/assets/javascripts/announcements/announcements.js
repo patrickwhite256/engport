@@ -9,7 +9,7 @@ $( document ).ready( function() {
   } );
 
   $('#announcement-search-query').change(function(){
-    if ($(this).text() === "") {
+    if ($(this).val() === "") {
       fetch_meeting_announcements();
     }
   });
