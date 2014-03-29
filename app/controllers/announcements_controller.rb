@@ -5,21 +5,33 @@ class AnnouncementsController < ApplicationController
     @announcement = Announcement.new
   end
 
-  def index
-    raise
-  end
-
   def create
   end
 
-  def edit
+  def index
+    @announcements = Announcement.all
   end
 
   def show
-   @announcement = Announcement.find(1)
+    @announcement = Announcement.find(params[:id])
+  end
+
+  def edit
+    @announcement = Announcement.find(params[:id])
   end
 
   def update
+    @announcement = Announcement.find(params[:id])
+    if @announcement.update_attributes(params.require(:announcement).permit(:title, :description, :date, :notes))
+      redirect_to action: 'show', id: @announcement
+    else
+      render action: 'edit'
+    end
+  end
+
+  def destroy
+    Announcement.find(params[:id]).destroy
+    redirect_to action: 'index'
   end
 
   def export
