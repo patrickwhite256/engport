@@ -41,6 +41,7 @@ class AnnouncementsController < ApplicationController
 
   def create
     new_announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
+    new_announcement.date = DateTime.new( Integer( params[:date_entry].split('-')[0] ), Integer( params[:date_entry].split('-')[1] ), Integer( params[:date_entry].split('-')[2] ), Integer( params[:time_entry].split(':')[0] ), Integer( params[:time_entry].split(':')[1], 0 ) )
     new_announcement.tag_list = params[:tag_entry].split('#').reject(&:empty?)
     new_announcement.save
 
