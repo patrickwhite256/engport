@@ -25,11 +25,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'rails_12factor', group: :production
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-
-group :development do
-  gem "better_errors"
-  gem 'binding_of_caller'
-end
+gem "better_errors"
+gem 'binding_of_caller'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
