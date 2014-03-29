@@ -15,6 +15,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'haml-rails', '0.4'
 gem 'simple_form'
 gem 'bootstrap-sass'
+gem 'acts-as-taggable-on'
 gem 'compass-rails', github: 'Compass/compass-rails'
 gem 'jquery-rails', "~> 2.1.4"
 gem 'sunspot_rails'
