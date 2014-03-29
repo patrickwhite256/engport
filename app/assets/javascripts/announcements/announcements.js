@@ -11,4 +11,10 @@ $( document ).ready( function() {
 	offset: 20,
 	resizeDelay: 20
     } );
+
+    $( '#meetings li a' ).click( function() {
+	$( '.active' ).removeClass( 'active' )
+	$( this ).parent().addClass( 'active' )
+    } );
+
 } );

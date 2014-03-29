@@ -6,17 +6,17 @@
     %h1= 'Choose your announcements'
     %ul.nav.nav-pills.center#meetings
       %li.active#meeting_one
-        %a{href: ''}= 'Meeting 1'
+        %a.meeting_link= 'Meeting 1'
       %li#meeting_two
-        %a{href: ''}= 'Meeting 2'
+        %a.meeting_link= 'Meeting 2'
       %li#meeting_three
-        %a{href: ''}= 'Meeting 3'
+        %a.meeting_link= 'Meeting 3'
       %li#meeting_four
-        %a{href: ''}= 'Meeting 4'
+        %a.meeting_link= 'Meeting 4'
       %li#meeting_five
-        %a{href: ''}= 'Meeting 5'
+        %a.meeting_link= 'Meeting 5'
       %li#meeting_six
-        %a{href: ''}= 'Meeting 6'
+        %a.meeting_link= 'Meeting 6'
     #wookmark_container
       - @announcements.each do |announcement|
         .event{id: announcement.id}

@@ -5,8 +5,11 @@ function clickListener(e) {
   if (clickedElement.id == 'export') {
     pdfExport()
     return;
-  } else if (clickedElement.tagName != 'DIV') {
-    clickedElement = clickedElement.parentNode
+  }
+  if( clickedElement.parentElement.className == 'event' ) {
+      clickedElement = clickedElement.parentElement;
+  } else if( clickedElement.className != 'event' ) {
+      return;
   }
 
   for(var j = 0; j < highlighted.length; j++) {
@@ -17,7 +20,7 @@ function clickListener(e) {
     }
   }
   if (clickedElement.id) {
-    clickedElement.style.backgroundColor = 'gray';
+    clickedElement.style.backgroundColor = 'rgba( 150, 150, 150, 0.6666666 )';
     highlighted.push(clickedElement.id);
   }
   return;
