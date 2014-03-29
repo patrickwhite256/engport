@@ -1,14 +1,27 @@
 #announcements_page {
-    background-image: image-url('tea.png');
+    background-image: image-url('television.png');
 
     h1 {
-	color: white;
 	text-align: center;
     }
 
     #meetings {
-	width: 600px;
+	max-width: 570px;
 	margin: 10px auto;
+
+	@media screen and (max-width: 400px) {
+	    max-width: 285px;
+	}
+    }
+
+    #announcement-search {
+	text-align: center;
+
+	#announcement-search-query {
+	    width: 100%;
+	    max-width: 600px;
+	    margin: 0 auto 40px;
+	}
     }
 
     #wookmark_container {
@@ -16,9 +29,14 @@
 	
 
 	.event {
-	    background-color: rgba( 255, 255, 255, 0.3 );
+	    background-color: rgba( 255, 255, 255, 0.4 );
 	    border-radius: 10px;
 	    padding: 10px;
+
+	    .caption {
+		font-style: italic;
+		font-size: 10px;
+	    }
 	}
     }
 }

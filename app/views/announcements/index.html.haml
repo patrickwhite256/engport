@@ -1,5 +1,6 @@
 = javascript_include_tag 'index'
 = javascript_include_tag "announcements/announcements"
+= javascript_include_tag 'search'
 
 .wrapper#announcements_page
   .container
@@ -17,10 +18,14 @@
         %a.meeting_link= 'Meeting 5'
       %li#meeting_six
         %a.meeting_link= 'Meeting 6'
+    %form#announcement-search{ method: "GET", action: "/announcements" }
+      %input.form-control#announcement-search-query{ type: "text", placeholder: "#search", name: "q", autocomplete: "off" }
     #wookmark_container
       - @announcements.each do |announcement|
         .event{id: announcement.id}
-          %h2= announcement.title
-          %h3= announcement.description
+          %h3= announcement.title
+          %p= announcement.description
+          - announcement.tag_list.each do |tag|
+            %span.caption= '#' + tag
           %br
 =link_to "Export", '#', id: 'export'

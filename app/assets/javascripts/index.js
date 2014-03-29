@@ -15,12 +15,14 @@ function clickListener(e) {
   for(var j = 0; j < highlighted.length; j++) {
     if (highlighted[j] == clickedElement.id) {
       clickedElement.style.backgroundColor = '';
+      clickedElement.style.color = '';
       highlighted.splice(j, 1);
       return;
     }
   }
   if (clickedElement.id) {
-    clickedElement.style.backgroundColor = 'rgba( 150, 150, 150, 0.6666666 )';
+    clickedElement.style.backgroundColor = 'rgba( 255, 50, 0, 0.3 )';
+    clickedElement.style.color = 'white';
     highlighted.push(clickedElement.id);
   }
   return;
