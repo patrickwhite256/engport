@@ -10,7 +10,7 @@ function clickListener(e) {
     return;
   } else if (clickedElement.id == 'tw') {
     pdfTwitter()
-    break;
+    return;
   }
 
   if (clickedElement.parentElement.className == 'event') {
