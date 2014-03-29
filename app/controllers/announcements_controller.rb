@@ -10,13 +10,18 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
+    new_announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
+    new_announcement.tag_list = params[:tag_entry].split('#').reject(&:empty?)
+    new_announcement.save
+
+    redirect_to new_announcement_path
   end
 
   def edit
   end
 
   def show
-   @announcement = Announcement.find(1)
+   @announcement = Announcement.find(params[:id])
   end
 
   def update
