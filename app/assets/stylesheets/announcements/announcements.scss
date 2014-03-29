@@ -1,0 +1,18 @@
+#announcements_page {
+    background-image: image-url('tea.png');
+
+    h1 {
+	color: white;
+	text-align: center;
+    }
+
+    #wookmark_container {
+	position: relative;
+
+	.event {
+	    background-color: rgba( 255, 255, 255, 0.3 );
+	    border-radius: 10px;
+	    padding: 10px;
+	}
+    }
+}
