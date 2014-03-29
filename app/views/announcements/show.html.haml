@@ -1,2 +1,3 @@
 %h1= @announcement.title
 %h2= @announcement.description
+=link_to "Delete", announcement_path(@announcement), method: 'delete', confirm: "Ya sure?"
