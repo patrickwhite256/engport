@@ -23,6 +23,8 @@ gem 'sunspot_solr'
 gem 'rtex'
 gem 'jbuilder', '~> 1.2'
 gem 'rails_12factor', group: :production
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 group :development do
   gem "better_errors"
