@@ -13,40 +13,26 @@ class AnnouncementsController < ApplicationController
 
       @announcements = []
 
-      @announcements += Announcement.search do
-        fulltext params[:q] do
-          fields :tags
-        end
-      end.results.map do |r|
+      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :description).find(params[:q]))
+        @announcements << match
+      end
+
+      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :tag_list).find(params[:q]))
+        @announcements << match
+      end
+
+      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :title).find(params[:q]))
+        @announcements << match
+      end
+
+      @announcements.map! do |r|
         {
           value: r.title,
           id: r.id
         }
       end
 
-      @announcements += Announcement.search do
-        fulltext params[:q] do
-          fields :description
-        end
-      end.results.map do |r|
-        {
-          value: r.title,
-          id: r.id
-        }
-      end
-
-      @announcements += Announcement.search do
-        fulltext params[:q] do
-          fields :title
-        end
-      end.results.map do |r|
-        {
-          value: r.title,
-          id: r.id
-        }
-      end
-
-      return render json: @announcements.uniq 
+      return render json: @announcements
 
     else
       @announcements = Announcement.all

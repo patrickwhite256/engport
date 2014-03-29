@@ -6,18 +6,9 @@
   .container
     %h1= 'Choose your announcements'
     %ul.nav.nav-pills.center#meetings
-      %li.active#meeting_one
-        %a.meeting_link= 'Meeting 1'
-      %li#meeting_two
-        %a.meeting_link= 'Meeting 2'
-      %li#meeting_three
-        %a.meeting_link= 'Meeting 3'
-      %li#meeting_four
-        %a.meeting_link= 'Meeting 4'
-      %li#meeting_five
-        %a.meeting_link= 'Meeting 5'
-      %li#meeting_six
-        %a.meeting_link= 'Meeting 6'
+      - for i in 1..6
+        %li(id="meeting#{i}" class="#{i == 1 ? "active" : ""}")
+          %a.meeting_link= "Meeting #{i}"
     %form#announcement-search{ method: "GET", action: "/announcements" }
       %input.form-control#announcement-search-query{ type: "text", placeholder: "#search", name: "q", autocomplete: "off" }
     #wookmark_container

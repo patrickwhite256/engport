@@ -18,10 +18,9 @@ gem 'acts-as-taggable-on'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'compass-rails', github: 'Compass/compass-rails'
 gem 'jquery-rails', "~> 2.1.4"
-gem 'sunspot_rails'
 gem 'rack'
-gem 'sunspot_solr'
 gem 'prawn'
+gem 'fuzzy_match'
 gem 'prawn_rails'
 gem 'jbuilder', '~> 1.2'
 gem 'rails_12factor', group: :production
