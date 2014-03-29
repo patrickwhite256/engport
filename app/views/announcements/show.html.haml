@@ -1,3 +1,16 @@
+= javascript_include_tag 'search'
 %h1= @announcement.title
 %h2= @announcement.description
 =link_to "Delete", announcement_path(@announcement), method: 'delete', confirm: "Ya sure?"
+
+%form#announcement-search{method: "GET", action: "/announcements"}
+  %input#announcement-search-query{type: "text", placeholder: "Search", name: "q", autocomplete: "off"}
+
+:css
+  #announcement-search-typeahead2 {
+    color: $mid-gray;
+    min-width: 300px;
+    .active a {
+      background-color: blue;
+    }
+  }
