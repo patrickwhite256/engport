@@ -2,17 +2,24 @@ var highlighted = new Array();
 
 function clickListener(e) {
   var clickedElement = (window.event) ? window.event.srcElement : e.target
-  if (clickedElement.id == 'export') {
-    pdfExport()
+  if (clickedElement.id == 'dl') {
+    pdfDownload()
     return;
-  }
-  if( clickedElement.parentElement.className == 'event' ) {
-      clickedElement = clickedElement.parentElement;
-  } else if( clickedElement.className != 'event' ) {
-      return;
+  } else if (clickedElement.id == 'fb') {
+    pdfFacebook()
+    return;
+  } else if (clickedElement.id == 'tw') {
+    pdfTwitter()
+    break;
   }
 
-  for(var j = 0; j < highlighted.length; j++) {
+  if (clickedElement.parentElement.className == 'event') {
+    clickedElement = clickedElement.parentElement;
+  } else if (clickedElement.className != 'event') {
+    return;
+  }
+
+  for (var j = 0; j < highlighted.length; j++) {
     if (highlighted[j] == clickedElement.id) {
       clickedElement.style.backgroundColor = '';
       clickedElement.style.color = '';
@@ -30,6 +37,14 @@ function clickListener(e) {
 
 document.onclick = clickListener;
 
-function pdfExport() {
-  window.location = 'announcements/export?ids=' + highlighted
+function pdfFacebook() {
+  window.location = 'announcements/export?ids=' + highlighted + '&method=fb'  
+}
+
+function pdfTwitter() {
+  window.location = 'announcements/export?ids=' + highlighted + '&method=tw'  
+}
+
+function pdfDownload() {
+  window.location = 'announcements/export?ids=' + highlighted + '&method=dl'
 }

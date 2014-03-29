@@ -84,10 +84,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def export
-    @announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
+    announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
 
     pdf = Prawn::Document.new
-    @announcements.each do |announce|
+    announcements.each do |announce|
       pdf.stroke_horizontal_rule
       pdf.pad(10) {
         pdf.text announce.title
@@ -95,8 +95,19 @@ class AnnouncementsController < ApplicationController
         pdf.text announce.notes
       }
     end
-    pdf.render_file "public/export.pdf"
 
-    send_file "public/export.pdf"
+    @filename = 'public/announcements_' + (0...8).map { (65 + rand(26)).chr }.join + '.pdf'
+    pdf.render_file @filename
+
+    if params[:method] == 'dl'
+      send_file @filename, filename: 'announcements.pdf'
+    elsif params[:method] == 'tw'
+      url = 'http://www.twitter.com/home?status=Check out the latest EngSoc announcements at: ' + request.env['HTTP_HOST'] + '/' + @filename
+      puts url
+      redirect_to url
+    else
+      url = 'http://www.facebook.com/sharer/sharer.php?u=' + request.env['HTTP_HOST'] + '/' + @filename
+      redirect_to url
+    end
   end
 end
