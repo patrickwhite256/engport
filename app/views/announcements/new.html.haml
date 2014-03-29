@@ -1,27 +1,28 @@
-.container
-  .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3#new_form
-    %h1= 'New Announcement'
-    = form_for @announcement do |f| 
-      .form-group
-        = f.label 'Title', class: 'col-sm-3 control-label'
-        .col-sm-9
-          = f.text_field :title, class: 'form-control'
-      .form-group
-        = f.label 'Date (optional)', class: 'col-sm-3 control-label'
-        .col-sm-9
-          = f.text_field :date, type: :date, class: 'form-control'
-      .form-group
-        = f.label 'Description', class: 'col-sm-3 control-label'
-        .col-sm-9
-          = f.text_area :description, class: 'form-control'
-      .form-group
-        = label_tag :tag_label, 'Tags', class: 'col-sm-3 control-label'
-        .col-sm-9
-          = text_field_tag :tag_entry, '', class: 'form-control', placeholder: '#awesome #youdabombclarisse'
-      .form-group
-        = f.label 'Special notes', class: 'col-sm-3 control-label'
-        .col-sm-9
-          = f.text_area :notes, class: 'form-control'
-      .form-group
-        .col-sm-10.col-sm-offset-1
-          = f.submit 'Add', class: 'btn btn-primary'
+.wrapper#new_announcement_page
+  .container
+    .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3#new_form
+      %h1= 'New Announcement'
+      = form_for @announcement do |f| 
+        .form-group
+          = f.label 'Title', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = f.text_field :title, class: 'form-control'
+        .form-group
+          = f.label 'Date (optional)', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = f.text_field :date, type: :date, class: 'form-control'
+        .form-group
+          = f.label 'Description', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = f.text_area :description, class: 'form-control'
+        .form-group
+          = label_tag :tag_label, 'Tags', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = text_field_tag :tag_entry, '', class: 'form-control', placeholder: '#awesome #youdabombclarisse'
+        .form-group
+          = f.label 'Special notes', class: 'col-sm-3 control-label'
+          .col-sm-9
+            = f.text_area :notes, class: 'form-control'
+        .form-group
+          .col-sm-10.col-sm-offset-1
+            = f.submit 'Add', class: 'btn btn-primary'
