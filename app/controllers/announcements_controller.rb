@@ -14,7 +14,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
-    raise
+   @announcement = Announcement.find(1)
   end
 
   def update
