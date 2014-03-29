@@ -1,8 +1,13 @@
 = javascript_include_tag 'index'
+= javascript_include_tag "announcements/announcements"
 
-- @announcements.each do |announcement|
-  %div{id: announcement.id}
-    %h1= announcement.title
-    %h2= announcement.description
-
+.wrapper#announcements_page
+  .container
+    %h1= 'Choose your announcements'
+    #wookmark_container
+      - @announcements.each do |announcement|
+        .event{id: announcement.id}
+          %h2= announcement.title
+          %h3= announcement.description
+          %br
 =link_to "Export", '#'
