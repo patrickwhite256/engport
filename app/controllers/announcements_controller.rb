@@ -11,17 +11,18 @@ class AnnouncementsController < ApplicationController
     if params[:auto_complete]
       return render json: [].to_json if params[:q].blank?
 
+      @meeting_announcements = Announcement.all.select{|a| a.tag_list.include?("#{params[:meeting]}")}
       @announcements = []
 
-      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :description).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :description).find(params[:q]))
         @announcements << match
       end
 
-      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :tag_list).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :tag_list).find(params[:q]))
         @announcements << match
       end
 
-      while (match = FuzzyMatch.new(Announcement.all - @announcements, read: :title).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :title).find(params[:q]))
         @announcements << match
       end
 
@@ -33,7 +34,6 @@ class AnnouncementsController < ApplicationController
       end
 
       return render json: @announcements
-
     else
       @announcements = Announcement.all
     end
@@ -67,6 +67,10 @@ class AnnouncementsController < ApplicationController
   def destroy
     Announcement.find(params[:id]).destroy
     redirect_to action: 'index'
+  end
+
+  def meeting_announcements
+    render json: { ids: Announcement.all.select{|a| a.tag_list.include?(params[:meeting])}.map(&:id) }
   end
 
   def export
