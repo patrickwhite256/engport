@@ -45,6 +45,7 @@ class AnnouncementsController < ApplicationController
   def create
     @announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
     @announcement.date = DateTime.parse(params[:date_entry] + " " + params[:time_entry]) if params[:date_entry].present? && params[:time_entry].present?
+    @announcement.tag_list += params[:tag_entry].split('#')
 
     if @announcement.save
       redirect_to new_announcement_path, notice: 'New Announcement Successfully Added.'
