@@ -105,7 +105,7 @@ class AnnouncementsController < ApplicationController
       send_file @filename, filename: 'announcements.pdf'
     elsif params[:method] == 'tw'
       url = "http://twitter.com/share?text=Checking out Le Petit Hopital in Provence&via=demeuretravel"
-      redirect_to("http://twitter.com/share",text:"hey")
+      redirect_to url
     else
       url = 'http://www.facebook.com/sharer/sharer.php?u=' + request.env['HTTP_HOST'] + '/' + @filename
       redirect_to url
