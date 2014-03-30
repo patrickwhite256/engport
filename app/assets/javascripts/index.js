@@ -1,15 +1,15 @@
 var highlighted = new Array();
 
 $( document ).ready( function() {
-    $( 'span.date.date_format' ).each( function() {
-	var timestamp = parseInt( $( this ).text() ) + 14400;
-	if( timestamp > 0 ) {
-	    $(this).text( moment.unix( timestamp ).calendar() );
-	} else {
-	    $(this).text('');
-	}
-	$(this).removeClass('date_format');
-    } );
+  $( 'span.date.date_format' ).each( function() {
+   var timestamp = parseInt( $( this ).text() ) + 14400;
+   if( timestamp > 0 ) {
+     $(this).text( moment.unix( timestamp ).calendar() );
+   } else {
+     $(this).text('');
+   }
+   $(this).removeClass('date_format');
+ } );
 } );
 
 function clickListener(e) {
@@ -36,12 +36,20 @@ function clickListener(e) {
       clickedElement.style.backgroundColor = '';
       clickedElement.style.color = '';
       highlighted.splice(j, 1);
+
+      if (highlighted.length === 0) {
+        $('a#dl').css('background-color', 'white');
+      }
       return;
     }
   }
   if ($(clickedElement).data('id')) {
     clickedElement.style.backgroundColor = 'rgba( 255, 50, 0, 0.3 )';
     clickedElement.style.color = 'white';
+
+    if (highlighted.length === 0) {
+      $('a#dl').css('background-color', '#ebebeb');
+    }
     highlighted.push($(clickedElement).data('id'));
   }
   return;

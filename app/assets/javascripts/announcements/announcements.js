@@ -1,21 +1,24 @@
+var active_ids = [];
+
 $( document ).ready( function() {
+
   search($("#announcement-search-query"), 'announcement-search-typeahead2');
   wookie();
+  fetch_meeting_announcements();
 
-  $( '#meetings li a' ).click( function() {
+  $( '.meeting_link' ).click( function() {
     $( '.active' ).removeClass( 'active' );
     $( this ).parent().addClass( 'active' );
+
     fetch_meeting_announcements();
   } );
 
-  $('#announcement-search-query').change(function(){
+  $('#announcement-search-query').keyup(function(){
     if ($(this).val() === "") {
       fetch_meeting_announcements();
     }
   });
 });
-
-
 
 function wookie() {
   $( '.event.visible' ).wookmark( {
@@ -36,18 +39,29 @@ function fetch_meeting_announcements() {
   $.ajax({
     url: '/announcements/meeting_announcements?meeting=' + $('.active').first().attr('id'),
     success: function(data) {
-      $('.event').css('display','none');
-      $('.event').removeClass('visible');
-
-      for (var i = 0; i < data.ids.length; i++) {
-        $(".event[data-id='" + data.ids[i] +"']").css('display','block');
-        $(".event[data-id='" + data.ids[i] +"']").addClass('visible');
-      }
-      wookie();
+      render_announcements(data);
     }
   });
 }
 
+function render_announcements(data) {
+
+  ids = []
+  for (var i = 0; i <  data.length; i++) {
+    ids.push(data[i].id)
+  }
+  if (ids.sort().join(',') !== active_ids.sort().join(',')) {
+    $('.event').fadeOut(200);
+    $('.event').removeClass('visible');
+    for (var i = 0; i < ids.length; i++) {
+      $(".event[data-id='" + ids[i] +"']").fadeIn();
+      $(".event[data-id='" + ids[i] +"']").addClass('visible');
+    }
+    wookie();
+    active_ids = ids;
+  }
+}
+ 
 function search($el, id) {
   $el.typeahead2({
     min_length: 0,
@@ -60,14 +74,7 @@ function search($el, id) {
         global: false,
         success: function(data) {
           typeahead.process(data);
-          $('.event').css('display','none');
-          $('.event').removeClass('visible');
-
-          for (var i = 0; i < data.length; i++) {
-            $(".event[data-id='" + data[i].id +"']").css('display','block');
-            $(".event[data-id='" + data[i].id +"']").addClass('visible');
-          }
-          wookie();
+          render_announcements(data);
         }
       });
     },

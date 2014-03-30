@@ -14,16 +14,19 @@ class AnnouncementsController < ApplicationController
       @meeting_announcements = Announcement.all.select{|a| a.tag_list.include?("#{params[:meeting]}")}
       @announcements = []
 
-      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :description).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements, read: :description).find(params[:q]))
         @announcements << match
+        @meeting_announcements = @meeting_announcements - [match]
       end
 
-      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :tag_list).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements, read: :tag_list).find(params[:q]))
         @announcements << match
+        @meeting_announcements = @meeting_announcements - [match]
       end
 
-      while (match = FuzzyMatch.new(@meeting_announcements - @announcements, read: :title).find(params[:q]))
+      while (match = FuzzyMatch.new(@meeting_announcements, read: :title).find(params[:q]))
         @announcements << match
+        @meeting_announcements = @meeting_announcements - [match]
       end
 
       @announcements.map! do |r|
@@ -40,12 +43,14 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
-    new_announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
-    new_announcement.date = DateTime.new( Integer( params[:date_entry].split('-')[0] ), Integer( params[:date_entry].split('-')[1] ), Integer( params[:date_entry].split('-')[2] ), Integer( params[:time_entry].split(':')[0] ), Integer( params[:time_entry].split(':')[1], 0 ) )
-    new_announcement.tag_list = params[:tag_entry].split('#').reject(&:empty?)
-    new_announcement.save
+    @announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
+    @announcement = DateTime.parse(params[:date_entry] + " " + params[:time_entry]) if params[:date_entry].present? && params[:time_entry].present?
 
-    redirect_to new_announcement_path
+    if @announcement.save
+      redirect_to new_announcement_path
+    else
+      render action: 'new', notice: 'hey' 
+    end
   end
 
   def edit
@@ -71,7 +76,13 @@ class AnnouncementsController < ApplicationController
   end
 
   def meeting_announcements
-    render json: { ids: Announcement.all.select{|a| a.tag_list.include?(params[:meeting])}.map(&:id) }
+    render json: Announcement.all.select{|a| a.tag_list.include?(params[:meeting])}.map! do |r|
+      {
+        value: r.title,
+        id: r.id
+      }
+    end
+
   end
 
   def export

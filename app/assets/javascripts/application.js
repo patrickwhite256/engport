@@ -13,8 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require jquery.wookmark
-//= require_self
 //= require bootstrap-typeahead2
 //= require moment.min

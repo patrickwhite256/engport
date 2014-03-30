@@ -2,7 +2,9 @@
   .container
     .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3#new_form
       %h1= 'New Announcement'
-      = form_for @announcement do |f| 
+      - @announcement.errors.full_messages.each do |e|
+        %li{style: "padding-left: 15px"}=e
+      = form_for @announcement do |f|
         .form-group
           = f.label 'Title', class: 'col-sm-3 control-label'
           .col-sm-9
