@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require jquery.wookmark
 //= require bootstrap-typeahead2
+//= require bootstrap/alert
+
 //= require moment.min

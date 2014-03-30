@@ -47,9 +47,10 @@ class AnnouncementsController < ApplicationController
     @announcement.date = DateTime.parse(params[:date_entry] + " " + params[:time_entry]) if params[:date_entry].present? && params[:time_entry].present?
 
     if @announcement.save
-      redirect_to new_announcement_path
+      redirect_to new_announcement_path, notice: 'New Announcement Successfully Added.'
     else
-      render action: 'new', notice: 'hey' 
+      flash[:error] = "Error Creating Announcement"
+      render action: 'new'
     end
   end
 
