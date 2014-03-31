@@ -1,28 +1,5 @@
-== README
+== EngPort
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+EngPort is designed to allow users to download a PDF of the EngSoc events they are interested in, without having to deal with other events getting in the way.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+EngPort is live at <a href='http://engport.herokuapp.com/'>http://engport.herokuapp.com/</a>
