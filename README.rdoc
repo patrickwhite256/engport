@@ -2,4 +2,4 @@
 
 EngPort is designed to allow users to download a PDF of the EngSoc events they are interested in, without having to deal with other events getting in the way.
 
-EngPort is live at <a href='http://engport.herokuapp.com/'>http://engport.herokuapp.com/</a>
+EngPort is live at http://engport.herokuapp.com/
