@@ -84,21 +84,56 @@ class AnnouncementsController < ApplicationController
         id: r.id
       }
     end
+  end
 
+  def print_announcements( category, announcements, pdf )
+    if announcements.size > 0 
+      pdf.pad_top(40) {
+        pdf.font_size(20) {
+          pdf.text category, :style => :bold
+	}
+      }
+    end
+    announcements_table = []
+    announcements.each do |announce|
+      if announce.date != nil
+        date_table = pdf.make_table( [[announce.date.strftime( '%b' )],[announce.date.strftime( '%l:%M%P' )]], cell_style: {borders: [], padding: [0, 0, 0, 10]} ) do
+	  style( row(0), size: 16 )
+	  style( row(1), size: 8 )
+        end
+        left_table = pdf.make_table( [[ announce.date.strftime( '%e' ), date_table], [{content: 'location', colspan: 2}]], cell_style: { width: 45, borders: [] } ) do
+	  style( column(0), size: 34, font_style: :bold, text_color: '828282', align: :right, padding: 0 )
+	  style( row(1), size: 12, width: 40, borders: [], font_style: :italic, text_color: '000000', align: :right, padding: [0, 10, 0, 0] )
+	end
+      else
+        left_table = pdf.make_table([['','']], cell_style: {borders: [], padding: [0, 10, 0, 0]} )
+      end
+      right_table = pdf.make_table( [[announce.title], [announce.description], [announce.notes] ], cell_style: {width: 450, borders: [:left], padding: [0, 0, 0, 10] } ) do
+        style( row(0), font_style: :bold, size: 14 )
+      end
+      announcements_table.push( [ left_table, right_table ] )
+    end
+    if announcements.size > 0
+      pdf.table( announcements_table, cell_style: { borders: [:top, :bottom], border_lines: [:dotted, :solid, :dotted, :solid], padding: [ 10, 0, 10, 0] } ) do
+        style( column(0), borders:[:right, :top, :bottom], border_lines: [:dotted, :solid, :dotted, :solid] )
+      end
+    end
   end
 
   def export
-    announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
+    announcements = params[:ids].split(',').map{|id| Announcement.find(id)}.sort{|vn| vn.date.to_i }
+
+    events = announcements.select{ |e| e.tag_list.include?('event') }
+    engineering_opportunities = announcements.select{ |e| e.tag_list.include?('engopportunity') }
+    fyis = announcements.select{ |e| e.tag_list.include?('fyi') }
+    other = announcements.reject{ |e| e.tag_list.include?('event') || e.tag_list.include?('engopportunity') || e.tag_list.include?('fyi') }
 
     pdf = Prawn::Document.new
-    announcements.each do |announce|
-      pdf.stroke_horizontal_rule
-      pdf.pad(10) {
-        pdf.text announce.title
-        pdf.text announce.description
-        pdf.text announce.notes
-      }
-    end
+
+    print_announcements( 'EVENTS', events, pdf )
+    print_announcements( 'ENGINEERING OPPORTUNITIES', engineering_opportunities, pdf )
+    print_announcements( 'FYI\'S', fyis, pdf )
+    print_announcements( 'OTHER', other, pdf )
 
     @filename = 'public/announcements_' + (0...8).map { (65 + rand(26)).chr }.join + '.pdf'
     pdf.render_file @filename

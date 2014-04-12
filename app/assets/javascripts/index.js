@@ -2,15 +2,18 @@ var highlighted = new Array();
 
 $( document ).ready( function() {
   $( 'span.date.date_format' ).each( function() {
-   var timestamp = parseInt( $( this ).text() ) + 14400;
-   if( timestamp > 0 ) {
-     $(this).text( moment.unix( timestamp ).calendar() );
-   } else {
-     $(this).text('');
-   }
+   $(this).text( getMoment( $( this ).text() ) ); 
    $(this).removeClass('date_format');
  } );
 } );
+
+function getMoment( time ) {
+   var timestamp = parseInt( time ) + 14400;
+   if( timestamp > 0 ) {
+     return moment.unix( timestamp ).calendar();
+   }
+   return '';
+}
 
 function clickListener(e) {
   var clickedElement = (window.event) ? window.event.srcElement : e.target
