@@ -121,7 +121,8 @@ class AnnouncementsController < ApplicationController
 	  style( row(1), size: 12, width: 40, borders: [], font_style: :bold, align: :right, padding: [0,10,0,0] )
 	end
       end
-      right_table = pdf.make_table( [[announce.title], [announce.description], ['P.S. '+announce.notes] ], cell_style: {width: 450, borders: [:left], padding: [0, 0, 0, 10] } ) do
+      announce.notes = 'P.S.' + announce.notes if announce.notes
+      right_table = pdf.make_table( [[announce.title], [announce.description], [announce.notes.to_s] ], cell_style: {width: 450, borders: [:left], padding: [0, 0, 0, 10] } ) do
         style( row(0), font_style: :bold, size: 14 )
 	style( row(2), font_style: :italic, padding: [5, 0, 0, 10] )
       end
