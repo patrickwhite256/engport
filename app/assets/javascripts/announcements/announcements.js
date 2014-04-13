@@ -10,7 +10,11 @@ $( document ).ready( function() {
     $( '.active' ).removeClass( 'active' );
     $( this ).parent().addClass( 'active' );
 
-    fetch_meeting_announcements();
+    if( $( this ).parent().attr('id') === 'meeting_all' ) {
+	fetch_all_announcements();
+    } else {
+	fetch_meeting_announcements();
+    }
   } );
 
   $('#announcement-search-query').keyup(function(){
@@ -32,6 +36,15 @@ function wookie() {
     flexibleWidth: true,
     offset: 20,
     resizeDelay: 20
+  });
+}
+
+function fetch_all_announcements() {
+  $.ajax({
+    url: '/announcements/meeting_announcements?meeting=all',
+    success: function(data) {
+      render_announcements(data);
+    }
   });
 }
 

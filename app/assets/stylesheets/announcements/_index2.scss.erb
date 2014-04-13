@@ -7,21 +7,40 @@
  }
 
  #meetings {
-   max-width: 570px;
+   max-width: 640px;
    margin: 10px auto;
+   text-align: center;
+
+   li {
+       float: none;
+       display: inline-block;
+   }
 
    @media screen and (max-width: 400px) {
      max-width: 285px;
    }
  }
 
- #announcement-search {
-   text-align: center;
+ .search_container {
+   width: 100%;
+   max-width: 600px;
+   margin: 0 auto 10px;
 
-   #announcement-search-query {
-     width: 100%;
-     max-width: 600px;
-     margin: 0 auto 10px;
+   #announcement-search {
+     text-align: center;
+
+     #announcement-search-query {
+       width: 100%;
+     }
+
+       @media screen and (max-width: 515px) {
+	   width: 75%;
+       }
+   }
+
+   button {
+       width: 80px;
+       padding: 5px 2px
    }
  }
 
@@ -31,7 +50,7 @@
    margin: 0 auto 20px;
    text-align: center;
 
-   a.btn.btn-default {
+   a.btn.btn-default.export {
      width: 170px;
      margin: 5px;
    }

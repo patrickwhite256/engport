@@ -43,7 +43,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
-    @announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes] )
+    @announcement = Announcement.new( description: params[:announcement][:description], title: params[:announcement][:title], notes: params[:announcement][:notes], location: params[:announcement][:location] )
     @announcement.date = DateTime.parse(params[:date_entry] + " " + params[:time_entry]) if params[:date_entry].present? && params[:time_entry].present?
     @announcement.tag_list += params[:tag_entry].split('#')
 
@@ -65,7 +65,7 @@ class AnnouncementsController < ApplicationController
 
   def update
     @announcement = Announcement.find(params[:id])
-    if @announcement.update_attributes(params.require(:announcement).permit(:title, :description, :date, :notes))
+    if @announcement.update_attributes(params.require(:announcement).permit(:title, :description, :date, :notes, :location))
       redirect_to action: 'show', id: @announcement
     else
       render action: 'edit'
@@ -78,11 +78,20 @@ class AnnouncementsController < ApplicationController
   end
 
   def meeting_announcements
-    render json: Announcement.all.select{|a| a.tag_list.include?(params[:meeting])}.map! do |r|
-      {
-        value: r.title,
-        id: r.id
-      }
+    if params[:meeting] == 'all'
+      render json: Announcement.all do |r|
+        {
+	  value: r.title,
+	  id: r.id
+        }
+      end
+    else
+      render json: Announcement.all.select{|a| a.tag_list.include?(params[:meeting])}.map! do |r|
+        {
+          value: r.title,
+          id: r.id
+        }
+      end
     end
   end
 
@@ -101,15 +110,20 @@ class AnnouncementsController < ApplicationController
 	  style( row(0), size: 16 )
 	  style( row(1), size: 8 )
         end
-        left_table = pdf.make_table( [[ announce.date.strftime( '%e' ), date_table], [{content: 'location', colspan: 2}]], cell_style: { width: 45, borders: [] } ) do
+        left_table = pdf.make_table( [[ announce.date.strftime( '%e' ), date_table], [{content: announce.location, colspan: 2}]], cell_style: { width: 45, borders: [] } ) do
 	  style( column(0), size: 34, font_style: :bold, text_color: '828282', align: :right, padding: 0 )
-	  style( row(1), size: 12, width: 40, borders: [], font_style: :italic, text_color: '000000', align: :right, padding: [0, 10, 0, 0] )
+	  style( row(0), height: 35 )
+	  style( row(1), size: 12, width: 40, borders: [], font_style: :bold, text_color: '000000', align: :right, padding: [0, 10, 0, 0] )
 	end
       else
-        left_table = pdf.make_table([['','']], cell_style: {borders: [], padding: [0, 10, 0, 0]} )
+        left_table = pdf.make_table([['',''], [{content: announce.location, colspan: 2}]], cell_style: {borders: [], padding: [0, 10, 0, 0], width: 45} ) do
+	  style( row(0), height: 35 )
+	  style( row(1), size: 12, width: 40, borders: [], font_style: :bold, align: :right, padding: [0,10,0,0] )
+	end
       end
-      right_table = pdf.make_table( [[announce.title], [announce.description], [announce.notes] ], cell_style: {width: 450, borders: [:left], padding: [0, 0, 0, 10] } ) do
+      right_table = pdf.make_table( [[announce.title], [announce.description], ['P.S. '+announce.notes] ], cell_style: {width: 450, borders: [:left], padding: [0, 0, 0, 10] } ) do
         style( row(0), font_style: :bold, size: 14 )
+	style( row(2), font_style: :italic, padding: [5, 0, 0, 10] )
       end
       announcements_table.push( [ left_table, right_table ] )
     end
@@ -121,12 +135,23 @@ class AnnouncementsController < ApplicationController
   end
 
   def export
-    announcements = params[:ids].split(',').map{|id| Announcement.find(id)}.sort{|vn| vn.date.to_i }
+    announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
+    notes = params[:notes].split(',,')
+    notes.each_with_index do |note, i|
+      announcements[i].notes = note
+    end
 
     events = announcements.select{ |e| e.tag_list.include?('event') }
+    events.sort{|vn| vn.date.to_f }
+
     engineering_opportunities = announcements.select{ |e| e.tag_list.include?('engopportunity') }
+    engineering_opportunities.sort{|vn| vn.date.to_f }
+
     fyis = announcements.select{ |e| e.tag_list.include?('fyi') }
+    fyis.sort{|vn| vn.date.to_f }
+
     other = announcements.reject{ |e| e.tag_list.include?('event') || e.tag_list.include?('engopportunity') || e.tag_list.include?('fyi') }
+    other.sort{|vn| vn.date.to_f }
 
     pdf = Prawn::Document.new
 

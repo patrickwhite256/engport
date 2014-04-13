@@ -94,8 +94,6 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
-    momentjs-rails (2.5.1)
-      railties (>= 3.1)
     multi_json (1.9.2)
     pdf-core (0.2.5)
     pg (0.17.1)
@@ -187,7 +185,6 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails (~> 2.1.4)
   jquery-turbolinks
-  momentjs-rails
   pg
   prawn
   prawn_rails
