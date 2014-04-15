@@ -153,8 +153,8 @@ class AnnouncementsController < ApplicationController
 
     other = announcements.reject{ |e| e.tag_list.include?('event') || e.tag_list.include?('engopportunity') || e.tag_list.include?('fyi') }
     other.sort{|vn| vn.date.to_f }
-
     pdf = Prawn::Document.new
+    pdf.image "#{Rails.root}/app/assets/images/EngSoc_header.jpg", position: :center, width: 300
 
     print_announcements( 'EVENTS', events, pdf )
     print_announcements( 'ENGINEERING OPPORTUNITIES', engineering_opportunities, pdf )
