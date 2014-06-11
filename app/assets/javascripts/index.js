@@ -2,7 +2,7 @@ var highlighted = new Array();
 
 $( document ).ready( function() {
   $( 'span.date.date_format' ).each( function() {
-   $(this).text( getMoment( $( this ).text() ) ); 
+   $(this).text( getMoment( $( this ).text() ) );
    $(this).removeClass('date_format');
  } );
   $('.export').attr('disabled', 'disabled' );
@@ -100,23 +100,23 @@ document.onclick = clickListener;
 function pdfFacebook() {
   var notes = '';
   highlighted.forEach( function( announce ) {
-    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,'; 
+    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,';
   } );
-  window.location = 'announcements/export?ids=' + highlighted + '&method=fb'  
+  window.location = 'announcements/export?ids=' + highlighted + '&method=fb'
 }
 
 function pdfTwitter() {
   var notes = '';
   highlighted.forEach( function( announce ) {
-    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,'; 
+    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,';
   } );
-  window.location = 'announcements/export?ids=' + highlighted + '&method=tw'  
+  window.location = 'announcements/export?ids=' + highlighted + '&method=tw'
 }
 
 function pdfDownload() {
   var notes = '';
   highlighted.forEach( function( announce ) {
-    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,'; 
+    notes += $('.event[data-id="'+announce+'"]').find('.notes').val() + ',,';
   } );
   window.location = 'announcements/export?ids=' + highlighted + '&method=dl&notes=' + notes;
 }

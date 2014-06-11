@@ -96,7 +96,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def print_announcements( category, announcements, pdf )
-    if announcements.size > 0 
+    if announcements.size > 0
       pdf.pad_top(40) {
         pdf.font_size(20) {
           pdf.text category, :style => :bold
@@ -137,9 +137,11 @@ class AnnouncementsController < ApplicationController
 
   def export
     announcements = params[:ids].split(',').map{|id| Announcement.find(id)}
-    notes = params[:notes].split(',,')
-    notes.each_with_index do |note, i|
-      announcements[i].notes = note
+    unless params[:notes].nil?
+      notes = params[:notes].split(',,')
+      notes.each_with_index do |note, i|
+        announcements[i].notes = note
+      end
     end
 
     events = announcements.select{ |e| e.tag_list.include?('event') }
